@@ -9,28 +9,34 @@ import UIKit
 
 final class ViewController: UIViewController {
     
+    //MARK: - UI Components
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "솝트에 오신 여러분 환영합니다!"
         return label
     }()
 
+    //MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setStyle()
-        setLayout()
+        style()
+        layout()
     }
 }
 
 private extension ViewController {
     
-    func setStyle() {
+    //MARK: - Custom Method
+    
+    func style() {
         
         view.backgroundColor = .white
     }
     
-    func setLayout() {
+    func layout() {
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         

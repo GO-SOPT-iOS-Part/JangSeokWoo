@@ -2,6 +2,8 @@ import UIKit
 
 final class SecondViewController: UIViewController {
     
+    //MARK: - UI Components
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "제 이름은요!"
@@ -20,6 +22,8 @@ final class SecondViewController: UIViewController {
         return button
     }()
     
+    //MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,12 +31,16 @@ final class SecondViewController: UIViewController {
         setLayout()
     }
     
+    //MARK: - Data Method
+    
     func dataBind(name: String) {
-            nameLabel.text = name
-        }
+        nameLabel.text = name
+    }
 }
 
 private extension SecondViewController {
+    
+    //MARK: - Custom Method
     
     func style() {
         
@@ -41,14 +49,16 @@ private extension SecondViewController {
     
     func setLayout() {
         
-        [nameLabel, backButton].forEach {
+        [nameLabel,
+         backButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
+            
         }
         
         NSLayoutConstraint.activate([nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                      nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
-    
+        
         
         NSLayoutConstraint.activate([backButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
                                      backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -56,12 +66,10 @@ private extension SecondViewController {
                                      backButton.heightAnchor.constraint(equalToConstant: 48)])
     }
     
-
+    //MARK: - Action Method
     
     @objc
     func backButtonTapped() {
-        presentedViewController?.dismiss(animated: true)
-        
         
         if self.navigationController == nil {
             self.dismiss(animated: true, completion: nil)
@@ -69,4 +77,5 @@ private extension SecondViewController {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    
 }
