@@ -32,10 +32,15 @@ class OnboardingVC: UIViewController {
         layout()
     }
     
-
 }
 
 //MARK: - Methods
+
+extension OnboardingVC {
+  
+}
+
+//MARK: - UI & Layout
 
 extension OnboardingVC {
     
@@ -54,10 +59,4 @@ extension OnboardingVC {
             $0.height.equalTo(55)
         }
     }
-}
-
-//MARK: - UI & Layout
-
-extension OnboardingVC {
-    
 }
