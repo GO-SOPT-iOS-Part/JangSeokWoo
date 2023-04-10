@@ -16,9 +16,11 @@ class OnboardingVC: UIViewController {
     
     //MARK: - UI Components
     
-    private let startLabel = UIButton().then {
+    private lazy var startButton = UIButton().then {
         $0.setTitle("티빙 시작하기", for: .normal)
+        $0.titleLabel?.font = .tvingSemibold(ofSize: 18)
         $0.backgroundColor = .tvingRed
+        $0.makeCornerRound(radius: 7)
     }
     
     
@@ -38,6 +40,9 @@ class OnboardingVC: UIViewController {
 
 extension OnboardingVC {
   
+    private func binding() {
+        
+    }
 }
 
 //MARK: - UI & Layout
@@ -49,14 +54,14 @@ extension OnboardingVC {
     }
     
     private func heirarchy() {
-        view.addSubview(startLabel)
+        view.addSubview(startButton)
     }
     
     private func layout() {
-        startLabel.snp.makeConstraints {
+        startButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-50)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(55)
+            $0.height.equalTo(52)
         }
     }
 }
