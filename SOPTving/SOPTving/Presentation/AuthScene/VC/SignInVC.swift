@@ -31,6 +31,7 @@ class SignInVC: UIViewController {
         $0.textColor = .white
     }
     
+//    기본 버전
 //    private let idTextField = UITextField().then {
 //        $0.placeholder = "아이디"
 //        $0.placeholderColor = .tvingLightGray
@@ -38,13 +39,23 @@ class SignInVC: UIViewController {
 //        $0.textColor = .white
 //        $0.backgroundColor = .tvingDarkGray
 //    }
-    private let idTextField : AuthTextField = {
-        let director = AuthTextFieldDirector()
-        let builder = AuthTextFieldBuilder()
-        director.update(builder: builder)
-        director.buildIDTextField()
-        return director.build()
-    }()
+
+    
+//  빌더패턴
+//  굳이 왜 쓰지 이거
+//  그냥 TextField에 프로퍼티 줄어든 버전이랄까
+    private let idTextField = AuthTextFieldBuilder(viewType: .id)
+                                .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
+                                .setPlaceholder(text: "아이디", color: .tvingLightGray)
+                                .setLeftPaddingAmount(22)
+                                .setCornerRadius(8)
+                                .addRightButton(.clearButton)
+                                .build()
+    
+    // 빌더 패턴에 디럭터 패턴까지 적용시킨 버전
+    // 디렉터까지 하면 모듈화하긴 좋을듯
+    private let passwordTextField = AuthTextFieldDirector().buildPasswordTextField()
+    
     
     //MARK: - Life Cycle
     
@@ -67,6 +78,8 @@ extension SignInVC {
         
     }
     
+    //MARK: - Action
+    
     @objc
     private func backButtonDidTap() {
         dismiss(animated: true)
@@ -84,7 +97,8 @@ extension SignInVC {
     private func hierarchy() {
         view.addSubviews(backButton,
                          titleLabel,
-                         idTextField)
+                         idTextField,
+                         passwordTextField)
     }
     
     private func layout() {
@@ -104,6 +118,12 @@ extension SignInVC {
             $0.top.equalTo(titleLabel.snp.bottom).offset(31)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(52)
+        }
+        
+        passwordTextField.snp.makeConstraints {
+            $0.top.equalTo(idTextField.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(idTextField)
+            $0.height.equalTo(idTextField)
         }
     }
 }
