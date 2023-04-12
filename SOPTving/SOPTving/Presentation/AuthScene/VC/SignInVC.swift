@@ -110,10 +110,10 @@ extension SignInVC {
     
     @objc
     private func signInButtonDidTap() {
-        let nextVC = UIViewController()
-        nextVC.view.backgroundColor = .white
-        present(nextVC, animated: true)
-        print("로그인 되었습니다")
+        let mainVC = MainVC()
+        guard let name = idTextField.text else { return }
+        mainVC.dataBind(name)
+        switchRootViewController(mainVC)
     }
 }
 
