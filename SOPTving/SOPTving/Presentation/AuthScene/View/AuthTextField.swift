@@ -128,13 +128,11 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     
     private var viewType: ViewType = .id
     
-    
     private var rightButtonTypes: [RightButtonType] = [] {
         didSet{
             setRightView()
         }
     }
-    
     
     //MARK: - UI Components
     
@@ -225,21 +223,14 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     }
     
     private func updateEditingUI() {
-        if isEditing {
-            setBorder(width: 1.5, color: .tvingLightGray)
-            rightView?.isHidden = false
-        } else {
-            setBorder(width: 1, color: .clear)
-            rightView?.isHidden = true
-        }
+        let color: UIColor = isEditing ? .tvingLightGray : .clear
+        
+        setBorder(width: 1.5, color: color)
+        rightView?.isHidden = !isEditing
     }
     
     private func updateClearButtonUI() {
-        if hasText {
-            clearButton.isHidden = false
-        } else {
-            clearButton.isHidden = true
-        }
+        clearButton.isHidden = !hasText
     }
     
     //MARK: - Public Method
@@ -266,11 +257,6 @@ extension AuthTextField: UITextViewDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         updateEditingUI()
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        print(#function)
-        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
