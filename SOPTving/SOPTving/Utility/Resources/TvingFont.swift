@@ -9,7 +9,7 @@ import UIKit
 
 extension UIFont {
     
-    class func tvingSemibold(ofSize size: CGFloat) -> UIFont{
+    class func tvingSemiBold(ofSize size: CGFloat) -> UIFont{
         return UIFont(name: "Pretendard-SemiBold", size: size)!
     }
     

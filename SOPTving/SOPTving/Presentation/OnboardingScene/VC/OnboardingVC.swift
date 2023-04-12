@@ -18,9 +18,10 @@ class OnboardingVC: UIViewController {
     
     private lazy var startButton = UIButton().then {
         $0.setTitle("티빙 시작하기", for: .normal)
-        $0.titleLabel?.font = .tvingSemibold(ofSize: 18)
+        $0.titleLabel?.font = .tvingSemiBold(ofSize: 18)
         $0.backgroundColor = .tvingRed
         $0.makeCornerRound(radius: 7)
+        $0.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
     }
     
     
@@ -30,7 +31,7 @@ class OnboardingVC: UIViewController {
         super.viewDidLoad()
         
         style()
-        heirarchy()
+        hierarchy()
         layout()
     }
     
@@ -43,6 +44,15 @@ extension OnboardingVC {
     private func binding() {
         
     }
+    
+    @objc
+    private func startButtonDidTap() {
+//        let signInSelectVC = SignInSelectVC()
+//        present(signInSelectVC, animated: true)
+        
+        let signInVC = SignInVC()
+        present(signInVC, animated: true)
+    }
 }
 
 //MARK: - UI & Layout
@@ -53,7 +63,7 @@ extension OnboardingVC {
         view.backgroundColor = .black
     }
     
-    private func heirarchy() {
+    private func hierarchy() {
         view.addSubview(startButton)
     }
     
