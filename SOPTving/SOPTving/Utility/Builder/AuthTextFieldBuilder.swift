@@ -12,12 +12,13 @@ protocol TextFieldBuilder {
     func setPlaceholder(text: String, color: UIColor) -> Self
     func setLeftPaddingAmount(_ offset: CGFloat) -> Self
     func setCornerRadius(_ radius: CGFloat) -> Self
+    func setCompletionHandler(completion: @escaping AuthTextField.handler) -> Self
 }
 
 //MARK: - Builder
 
 final class AuthTextFieldBuilder: TextFieldBuilder {
-
+    
     //MARK: UI Components
     
     private var textField = AuthTextField()
@@ -65,6 +66,14 @@ final class AuthTextFieldBuilder: TextFieldBuilder {
         textField.addRightButton(button)
         return self
     }
+    @discardableResult
+    func setCompletionHandler(completion: @escaping AuthTextField.handler) -> Self{
+        textField.setCompletion(completion: completion)
+        return self
+    }
+    
+
+    
 }
 
 
@@ -84,7 +93,7 @@ final class AuthTextFieldDirector {
                                         .setLeftPaddingAmount(20)
                                         .setText(color: .white, font: .tvingMedium(ofSize: 16))
                                         .setPlaceholder(text: "아이디", color: .tvingLightGray)
-                                        .setCornerRadius(8)
+                                        .setCornerRadius(6)
                                         .addRightButton(.clearButton)
         guard let builder else { return AuthTextField() }
         return builder.build()
@@ -96,7 +105,7 @@ final class AuthTextFieldDirector {
                                         .setLeftPaddingAmount(20)
                                         .setText(color: .white, font: .tvingMedium(ofSize: 16))
                                         .setPlaceholder(text: "비밀번호", color: .tvingLightGray)
-                                        .setCornerRadius(8)
+                                        .setCornerRadius(6)
                                         .addRightButton(.clearButton)
                                         .addRightButton(.hideButton)
         

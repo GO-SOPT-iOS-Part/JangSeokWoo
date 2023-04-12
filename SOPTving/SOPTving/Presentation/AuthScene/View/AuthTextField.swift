@@ -14,6 +14,9 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     
     //MARK: - Properties
     
+    typealias handler = (() -> Void)
+    private var completionHandler: handler?
+    
     enum ViewType {
         case id
         case password
@@ -38,6 +41,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         button.tintColor = .tvingLightGray
+        button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -47,6 +51,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
         button.setImage(UIImage(systemName: "eye.slash.fill"), for: .selected)
         button.tintColor = .tvingLightGray
+        button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(hideButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -56,7 +61,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
-        stackView.spacing = 10
+        stackView.spacing = 15
         return stackView
     }()
     
@@ -101,8 +106,19 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     
     private func layout() {
         rightStackView.snp.makeConstraints {
-            $0.width.lessThanOrEqualTo(80)
+            $0.width.lessThanOrEqualTo(100)
         }
+    }
+    
+    private func updateEditingUI() {
+        let color: UIColor = isEditing ? .white : .clear
+        
+        setBorder(width: 1, color: color)
+        rightView?.isHidden = !isEditing
+    }
+    
+    private func updateClearButtonUI() {
+        clearButton.isHidden = !hasText
     }
     
     private func setRightView() {
@@ -120,21 +136,14 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         rightStackView.addArrangedSubview(paddingView)
     }
     
-    private func updateEditingUI() {
-        let color: UIColor = isEditing ? .tvingLightGray : .clear
-        
-        setBorder(width: 1.5, color: color)
-        rightView?.isHidden = !isEditing
-    }
-    
-    private func updateClearButtonUI() {
-        clearButton.isHidden = !hasText
-    }
-    
     //MARK: - Public Method
     
     public func addRightButton(_ rightButtonType: RightButtonType) {
         rightButtonTypes.append(rightButtonType)
+    }
+    
+    public func setCompletion(completion: @escaping handler) {
+        completionHandler = completion
     }
     
     //MARK: - Action Method
@@ -168,6 +177,7 @@ extension AuthTextField: UITextViewDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateClearButtonUI()
+        completionHandler?()
     }
 
 }

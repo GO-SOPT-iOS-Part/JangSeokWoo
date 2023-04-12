@@ -11,7 +11,7 @@ import Combine
 import SnapKit
 import Then
 
-class SignInVC: UIViewController {
+final class SignInVC: UIViewController {
     
     //MARK: - Properties
     
@@ -39,7 +39,7 @@ class SignInVC: UIViewController {
                                 .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
                                 .setPlaceholder(text: "아이디", color: .tvingLightGray)
                                 .setLeftPaddingAmount(22)
-                                .setCornerRadius(8)
+                                .setCornerRadius(6)
                                 .addRightButton(.clearButton)
                                 .build()
     
@@ -47,16 +47,26 @@ class SignInVC: UIViewController {
     // 디렉터까지 하면 모듈화하긴 좋을듯
     private let passwordTextField = AuthTextFieldDirector().buildPasswordTextField()
     
+    private lazy var signInButton = UIButton().then {
+        $0.setTitle("로그인 하기", for: .normal)
+        $0.titleLabel?.textColor = .tvingLightGray
+        $0.titleLabel?.font = .tvingSemiBold(ofSize: 16)
+        $0.backgroundColor = .tvingRed
+        $0.makeCornerRound(radius: 6)
+        $0.addTarget(self, action: #selector(signInButtonDidTap), for: .touchUpInside)
+    }
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        target()
         binding()
         style()
         hierarchy()
         layout()
+        updateSignInButtonUI()
     }
     
 }
@@ -65,8 +75,30 @@ class SignInVC: UIViewController {
 
 extension SignInVC {
     
+    private func target() {
+        idTextField.setCompletion { [weak self] in
+            guard let self else { return }
+            self.updateSignInButtonUI()
+        }
+        
+        passwordTextField.setCompletion { [weak self] in
+            guard let self else { return }
+            self.updateSignInButtonUI()
+        }
+    }
+    
     private func binding() {
         
+    }
+    
+    private func updateSignInButtonUI() {
+        let isEnabled = idTextField.hasText && passwordTextField.hasText
+        let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
+        let borderColor: UIColor = isEnabled ? .tvingRed : .tvingLightGray
+        
+        signInButton.setBorder(width: 1, color: borderColor)
+        signInButton.backgroundColor = backgroundColor
+        signInButton.isEnabled = isEnabled
     }
     
     //MARK: - Action
@@ -74,6 +106,14 @@ extension SignInVC {
     @objc
     private func backButtonDidTap() {
         dismiss(animated: true)
+    }
+    
+    @objc
+    private func signInButtonDidTap() {
+        let nextVC = UIViewController()
+        nextVC.view.backgroundColor = .white
+        present(nextVC, animated: true)
+        print("로그인 되었습니다")
     }
 }
 
@@ -89,7 +129,8 @@ extension SignInVC {
         view.addSubviews(backButton,
                          titleLabel,
                          idTextField,
-                         passwordTextField)
+                         passwordTextField,
+                         signInButton)
     }
     
     private func layout() {
@@ -112,9 +153,15 @@ extension SignInVC {
         }
         
         passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(idTextField.snp.bottom).offset(20)
+            $0.top.equalTo(idTextField.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(idTextField)
             $0.height.equalTo(idTextField)
+        }
+        
+        signInButton.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            $0.centerX.equalTo(passwordTextField)
+            $0.size.equalTo(passwordTextField)
         }
     }
 }
