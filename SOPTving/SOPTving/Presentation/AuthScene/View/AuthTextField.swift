@@ -126,12 +126,6 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         case hideButton
     }
     
-    override var text: String? {
-        didSet{
-           updateClearButtonUI()
-        }
-    }
-    
     private var viewType: ViewType = .id
     
     
@@ -289,7 +283,7 @@ extension AuthTextField: UITextViewDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        self.text = textField.text
+        updateClearButtonUI()
     }
 
 }
