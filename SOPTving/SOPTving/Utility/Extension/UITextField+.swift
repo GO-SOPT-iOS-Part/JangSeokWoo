@@ -11,7 +11,7 @@ extension UITextField {
 
     var placeholderColor: UIColor {
         get{
-            return self.placeholderColor
+            return .black
         }
         set{
             attributedPlaceholder = NSAttributedString(string: placeholder ?? "",
@@ -22,7 +22,7 @@ extension UITextField {
     
     var leftPaddingOffset: CGFloat {
         get {
-            return self.leftPaddingOffset
+            return 0
         }
         set {
             let paddingView = UIView(frame: CGRect(x: 0,

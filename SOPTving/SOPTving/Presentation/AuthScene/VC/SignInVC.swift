@@ -31,13 +31,20 @@ class SignInVC: UIViewController {
         $0.textColor = .white
     }
     
-    private let idTextField = UITextField().then {
-        $0.placeholder = "아이디"
-        $0.placeholderColor = .tvingLightGray
-        $0.leftPaddingOffset = 20
-        $0.textColor = .white
-        $0.backgroundColor = .tvingDarkGray
-    }
+//    private let idTextField = UITextField().then {
+//        $0.placeholder = "아이디"
+//        $0.placeholderColor = .tvingLightGray
+//        $0.leftPaddingOffset = 20
+//        $0.textColor = .white
+//        $0.backgroundColor = .tvingDarkGray
+//    }
+    private let idTextField : AuthTextField = {
+        let director = AuthTextFieldDirector()
+        let builder = AuthTextFieldBuilder()
+        director.update(builder: builder)
+        director.buildIDTextField()
+        return director.build()
+    }()
     
     //MARK: - Life Cycle
     
