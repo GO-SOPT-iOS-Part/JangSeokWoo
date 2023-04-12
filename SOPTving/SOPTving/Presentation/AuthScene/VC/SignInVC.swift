@@ -31,19 +31,10 @@ class SignInVC: UIViewController {
         $0.textColor = .white
     }
     
-//    기본 버전
-//    private let idTextField = UITextField().then {
-//        $0.placeholder = "아이디"
-//        $0.placeholderColor = .tvingLightGray
-//        $0.leftPaddingOffset = 20
-//        $0.textColor = .white
-//        $0.backgroundColor = .tvingDarkGray
-//    }
-
-    
-//  빌더패턴
-//  굳이 왜 쓰지 이거
-//  그냥 TextField에 프로퍼티 줄어든 버전이랄까
+    //  빌더패턴
+    //  그냥 TextField에 프로퍼티 줄어든 버전이랄까
+    // 기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
+    // addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
     private let idTextField = AuthTextFieldBuilder(viewType: .id)
                                 .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
                                 .setPlaceholder(text: "아이디", color: .tvingLightGray)

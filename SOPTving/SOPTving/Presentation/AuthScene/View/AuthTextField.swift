@@ -121,11 +121,6 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         case password
     }
     
-    enum ActiveType {
-        case activate
-        case deactivate
-    }
-    
     enum RightButtonType : Int{
         case clearButton
         case hideButton
@@ -139,11 +134,6 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     
     private var viewType: ViewType = .id
     
-    private var activeType: ActiveType = .deactivate {
-        didSet {
-            updateUI()
-        }
-    }
     
     private var rightButtonTypes: [RightButtonType] = [] {
         didSet{
@@ -189,7 +179,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         configure()
         setRightView()
         updateClearButtonUI()
-        updateUI()
+        updateEditingUI()
         style()
         layout()
     }
@@ -240,20 +230,18 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         rightStackView.addArrangedSubview(paddingView)
     }
     
-    private func updateUI() {
-        switch self.activeType {
-        case .deactivate:
-            setBorder(width: 1, color: .clear)
-            rightView?.isHidden = true
-            
-        case .activate:
+    private func updateEditingUI() {
+        if isEditing {
             setBorder(width: 1.5, color: .tvingLightGray)
             rightView?.isHidden = false
+        } else {
+            setBorder(width: 1, color: .clear)
+            rightView?.isHidden = true
         }
     }
     
     private func updateClearButtonUI() {
-        if self.hasText {
+        if hasText {
             clearButton.isHidden = false
         } else {
             clearButton.isHidden = true
@@ -283,7 +271,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
 extension AuthTextField: UITextViewDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeType = .activate
+        updateEditingUI()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -297,7 +285,7 @@ extension AuthTextField: UITextViewDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        activeType = .deactivate
+        updateEditingUI()
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
