@@ -12,16 +12,16 @@ extension UIViewController{
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
           self.view.endEditing(true)
     }
-    
-    func switchRootViewController(_ viewControllerToPresent: UIViewController) {
-        if let window = UIApplication.shared.windows.first {
-            window.rootViewController = viewControllerToPresent
-            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
-        } else {
-            viewControllerToPresent.modalPresentationStyle = .overFullScreen
-            self.present(viewControllerToPresent, animated: true, completion: nil)
-        }
-    }
+//    
+//    func switchRootViewController(_ viewControllerToPresent: UIViewController) {
+//        if let window = UIApplication.shared.windows.first {
+//            window.rootViewController = viewControllerToPresent
+//            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
+//        } else {
+//            viewControllerToPresent.modalPresentationStyle = .overFullScreen
+//            self.present(viewControllerToPresent, animated: true, completion: nil)
+//        }
+//    }
     
     func presentBottomAlert(_ message: String) {
       

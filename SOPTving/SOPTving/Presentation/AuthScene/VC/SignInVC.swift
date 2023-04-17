@@ -33,8 +33,8 @@ final class SignInVC: UIViewController {
     
     //  빌더패턴
     //  그냥 TextField에 프로퍼티 줄어든 버전이랄까
-    // 기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
-    // addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
+    //  기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
+    //  addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
     private let idTextField = AuthTextFieldBuilder(viewType: .id)
                                 .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
                                 .setPlaceholder(text: "아이디", color: .tvingLightGray)
@@ -91,6 +91,7 @@ extension SignInVC {
         
     }
     
+    // 이부분을 뷰모델이 했으면 좋겠다
     private func updateSignInButtonUI() {
         let isEnabled = idTextField.hasText && passwordTextField.hasText
         let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
@@ -113,7 +114,7 @@ extension SignInVC {
         let mainVC = MainVC()
         guard let name = idTextField.text else { return }
         mainVC.dataBind(name)
-        switchRootViewController(mainVC)
+        UIApplication.shared.changeRootViewController(mainVC)
     }
 }
 
