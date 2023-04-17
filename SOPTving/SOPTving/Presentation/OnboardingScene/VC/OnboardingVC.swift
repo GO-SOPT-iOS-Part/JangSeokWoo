@@ -16,6 +16,13 @@ class OnboardingVC: UIViewController {
     
     //MARK: - UI Components
     
+    private let onboardingImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "onboarding")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private lazy var startButton = UIButton().then {
         $0.setTitle("티빙 시작하기", for: .normal)
         $0.titleLabel?.font = .tvingSemiBold(ofSize: 18)
@@ -64,10 +71,15 @@ extension OnboardingVC {
     }
     
     private func hierarchy() {
-        view.addSubview(startButton)
+        view.addSubviews(onboardingImageView,
+                         startButton)
     }
     
     private func layout() {
+        onboardingImageView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(startButton.snp.top).offset(-20)
+        }
         startButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-50)
             $0.leading.trailing.equalToSuperview().inset(20)

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class AuthTextField : UITextField, UITextFieldDelegate {
+final class AuthTextField : UITextField {
     
     //MARK: - Properties
     
@@ -20,6 +20,13 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     enum ViewType {
         case id
         case password
+        
+        var isSecureTextEntry: Bool {
+            switch self {
+            case .id: return false
+            case .password: return true
+            }
+        }
     }
     
     enum RightButtonType : Int{
@@ -27,7 +34,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         case hideButton
     }
     
-    private var viewType: ViewType = .id
+    private var textFieldType: ViewType = .id
     
     private var rightButtonTypes: [RightButtonType] = [] {
         didSet{
@@ -46,12 +53,13 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var hideButton: UIButton = {
+    private lazy var secureButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
         button.setImage(UIImage(systemName: "eye.slash.fill"), for: .selected)
         button.tintColor = .tvingLightGray
         button.contentMode = .scaleAspectFit
+        button.isSelected = true
         button.addTarget(self, action: #selector(hideButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -68,7 +76,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     //MARK: - Life Cycle
     
     init(viewType: ViewType = .id) {
-        self.viewType = viewType
+        self.textFieldType = viewType
         super.init(frame: .zero)
         
         configure()
@@ -88,16 +96,12 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     private func configure() {
         
         delegate = self
+        
         rightViewMode = .always
         rightView = rightStackView
         
-        switch viewType {
-        case .id:
-            isSecureTextEntry = false
-        case .password:
-            isSecureTextEntry = true
-            hideButton.isSelected = true
-        }
+        isSecureTextEntry = textFieldType.isSecureTextEntry
+        
     }
     
     private func style() {
@@ -128,7 +132,7 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
             case .clearButton:
                 rightStackView.addArrangedSubview(clearButton)
             case .hideButton:
-                rightStackView.addArrangedSubview(hideButton)
+                rightStackView.addArrangedSubview(secureButton)
             }
         }
         
@@ -155,12 +159,12 @@ final class AuthTextField : UITextField, UITextFieldDelegate {
     
     @objc
     private func hideButtonDidTap() {
-        hideButton.isSelected.toggle()
-        isSecureTextEntry = hideButton.isSelected
+        secureButton.isSelected.toggle()
+        isSecureTextEntry = secureButton.isSelected
     }
 }
 
-extension AuthTextField: UITextViewDelegate {
+extension AuthTextField: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         updateEditingUI()
