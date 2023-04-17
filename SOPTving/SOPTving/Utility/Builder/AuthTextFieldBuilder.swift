@@ -25,7 +25,7 @@ final class AuthTextFieldBuilder: TextFieldBuilder {
     
     //MARK: Life Cycle
     
-    init(viewType: AuthTextField.ViewType) {
+    init(viewType: AuthTextField.TextFieldType) {
         textField = AuthTextField(viewType: viewType)
     }
     

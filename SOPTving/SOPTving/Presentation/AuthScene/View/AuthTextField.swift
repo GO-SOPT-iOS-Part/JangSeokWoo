@@ -17,7 +17,7 @@ final class AuthTextField : UITextField {
     typealias handler = (() -> Void)
     private var completionHandler: handler?
     
-    enum ViewType {
+    enum TextFieldType {
         case id
         case password
         
@@ -34,13 +34,7 @@ final class AuthTextField : UITextField {
         case hideButton
     }
     
-    private var textFieldType: ViewType = .id
-    
-    private var rightButtonTypes: [RightButtonType] = [] {
-        didSet{
-            setRightView()
-        }
-    }
+    private var textFieldType: TextFieldType = .id
     
     //MARK: - UI Components
     
@@ -48,7 +42,7 @@ final class AuthTextField : UITextField {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         button.tintColor = .tvingLightGray
-        button.contentMode = .scaleAspectFit
+        button.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -67,20 +61,21 @@ final class AuthTextField : UITextField {
     private lazy var rightStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 15
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
     //MARK: - Life Cycle
     
-    init(viewType: ViewType = .id) {
+    init(viewType: TextFieldType = .id) {
         self.textFieldType = viewType
         super.init(frame: .zero)
         
-        configure()
-        setRightView()
+        delegate()
         updateClearButtonUI()
         updateEditingUI()
         style()
@@ -93,19 +88,17 @@ final class AuthTextField : UITextField {
     
     //MARK: - Custom Method
     
-    private func configure() {
-        
+    private func delegate() {
         delegate = self
-        
-        rightViewMode = .always
-        rightView = rightStackView
-        
-        isSecureTextEntry = textFieldType.isSecureTextEntry
-        
     }
     
     private func style() {
-        backgroundColor = .darkGray
+        
+        self.autocapitalizationType = .none
+        self.rightView = rightStackView
+        self.rightViewMode = .whileEditing
+        self.isSecureTextEntry = textFieldType.isSecureTextEntry
+        self.backgroundColor = .darkGray
     }
     
     private func layout() {
@@ -116,34 +109,22 @@ final class AuthTextField : UITextField {
     
     private func updateEditingUI() {
         let color: UIColor = isEditing ? .white : .clear
-        
         setBorder(width: 1, color: color)
-        rightView?.isHidden = !isEditing
     }
     
     private func updateClearButtonUI() {
         clearButton.isHidden = !hasText
     }
     
-    private func setRightView() {
-        rightStackView.removeAllArrangedSubviews()
-        for type in rightButtonTypes {
-            switch type {
-            case .clearButton:
-                rightStackView.addArrangedSubview(clearButton)
-            case .hideButton:
-                rightStackView.addArrangedSubview(secureButton)
-            }
-        }
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        rightStackView.addArrangedSubview(paddingView)
-    }
-    
     //MARK: - Public Method
     
     public func addRightButton(_ rightButtonType: RightButtonType) {
-        rightButtonTypes.append(rightButtonType)
+        switch rightButtonType {
+        case .clearButton:
+            rightStackView.addArrangedSubview(clearButton)
+        case .hideButton:
+            rightStackView.addArrangedSubview(secureButton)
+        }
     }
     
     public func setCompletion(completion: @escaping handler) {
@@ -163,6 +144,8 @@ final class AuthTextField : UITextField {
         isSecureTextEntry = secureButton.isSelected
     }
 }
+
+//MARK: - UITextFieldDelegate
 
 extension AuthTextField: UITextFieldDelegate {
     
