@@ -76,12 +76,12 @@ final class SignInVC: UIViewController {
 extension SignInVC {
     
     private func target() {
-        idTextField.setCompletion { [weak self] in
+        idTextField.setUpdateHandler { [weak self] in
             guard let self else { return }
             self.updateSignInButtonUI()
         }
         
-        passwordTextField.setCompletion { [weak self] in
+        passwordTextField.setUpdateHandler { [weak self] in
             guard let self else { return }
             self.updateSignInButtonUI()
         }

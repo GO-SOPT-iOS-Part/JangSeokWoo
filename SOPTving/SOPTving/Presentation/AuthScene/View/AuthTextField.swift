@@ -15,7 +15,7 @@ final class AuthTextField : UITextField {
     //MARK: - Properties
     
     typealias handler = (() -> Void)
-    private var completionHandler: handler?
+    private var updateHandler: handler?
     
     enum TextFieldType {
         case id
@@ -76,10 +76,11 @@ final class AuthTextField : UITextField {
         super.init(frame: .zero)
         
         delegate()
-        updateClearButtonUI()
-        updateEditingUI()
         style()
         layout()
+        
+        updateClearButtonUI()
+        updateEditingUI()
     }
     
     required init?(coder: NSCoder) {
@@ -93,7 +94,6 @@ final class AuthTextField : UITextField {
     }
     
     private func style() {
-        
         self.autocapitalizationType = .none
         self.rightView = rightStackView
         self.rightViewMode = .whileEditing
@@ -127,8 +127,8 @@ final class AuthTextField : UITextField {
         }
     }
     
-    public func setCompletion(completion: @escaping handler) {
-        completionHandler = completion
+    public func setUpdateHandler(updateHandler: @escaping handler) {
+        self.updateHandler = updateHandler
     }
     
     //MARK: - Action Method
@@ -164,7 +164,7 @@ extension AuthTextField: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateClearButtonUI()
-        completionHandler?()
+        updateHandler?()
     }
 
 }

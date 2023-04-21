@@ -68,11 +68,9 @@ final class AuthTextFieldBuilder: TextFieldBuilder {
     }
     @discardableResult
     func setCompletionHandler(completion: @escaping AuthTextField.handler) -> Self{
-        textField.setCompletion(completion: completion)
+        textField.setUpdateHandler(updateHandler: completion)
         return self
     }
-    
-
     
 }
 

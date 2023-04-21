@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class OnboardingVC: UIViewController {
+final class OnboardingVC: UIViewController {
     
     //MARK: - Properties
     
