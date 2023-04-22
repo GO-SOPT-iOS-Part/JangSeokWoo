@@ -14,18 +14,25 @@ final class MainVC: UIViewController {
     
     //MARK: - Properties
     
-    private var name: String? {
+    var mainTitle: String? {
         didSet {
             updateUI()
         }
     }
+    
+    private var data: [String] = ["처음", "중간", "마지막"]
+    
+    private var currentNode : Node<String>? {
+        didSet{ mainTitle = currentNode?.data }
+    }
+    private var dataLinkedList = LinkedList<String>()
     
     //MARK: - UI Components
     
     private let profileLabel: UILabel = {
         let label = UILabel()
         label.font = .tvingSemiBold(ofSize: 20)
-        label.text = "gd"
+        label.text = "asdf"
         label.textColor = .white
         return label
     }()
@@ -34,7 +41,7 @@ final class MainVC: UIViewController {
                                     .setTitle("다음으로",
                                              color: .white,
                                              font: .tvingSemiBold(ofSize: 16))
-                                    .setBackGroundColor(.systemBlue)
+                                    .setBackgroundColor(.systemBlue)
                                     .setCornerRadius(12)
                                     .setAction { [weak self] _ in
                                         self?.nextButtonDidTap()
@@ -49,6 +56,17 @@ final class MainVC: UIViewController {
         style()
         hierarchy()
         layout()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setData()
     }
     
 }
@@ -58,13 +76,15 @@ final class MainVC: UIViewController {
 extension MainVC {
     
     private func updateUI() {
-        profileLabel.text = name
+        profileLabel.text = mainTitle
     }
+
     
     //MARK: Public
     
-    public func dataBind(_ text: String) {
-        self.name = text
+    private func setData() {
+        dataLinkedList.append(data: data)
+        currentNode = dataLinkedList.getFirstNode()
     }
     
 }
@@ -73,7 +93,7 @@ extension MainVC {
 
 extension MainVC {
     func nextButtonDidTap() {
-        
+        currentNode = currentNode?.next
     }
 }
 
