@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainVC: UIViewController {
+final class MainVC: UIViewController {
     
     //MARK: - Properties
     
@@ -22,26 +22,30 @@ class MainVC: UIViewController {
     
     //MARK: - UI Components
     
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "profile_tving.cute")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
     private let profileLabel: UILabel = {
         let label = UILabel()
         label.font = .tvingSemiBold(ofSize: 20)
+        label.text = "gd"
         label.textColor = .white
         return label
     }()
+    
+    private lazy var nextButton = ButtonBuilder()
+                                    .setTitle("다음으로",
+                                             color: .white,
+                                             font: .tvingSemiBold(ofSize: 16))
+                                    .setBackGroundColor(.systemBlue)
+                                    .setCornerRadius(12)
+                                    .setAction { [weak self] _ in
+                                        self?.nextButtonDidTap()
+                                    }
+                                    .build()
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        binding()
         style()
         hierarchy()
         layout()
@@ -53,10 +57,6 @@ class MainVC: UIViewController {
 
 extension MainVC {
     
-    private func binding() {
-        
-    }
-    
     private func updateUI() {
         profileLabel.text = name
     }
@@ -67,6 +67,14 @@ extension MainVC {
         self.name = text
     }
     
+}
+
+//MARK: - Action Method
+
+extension MainVC {
+    func nextButtonDidTap() {
+        
+    }
 }
 
 
@@ -82,19 +90,19 @@ extension MainVC {
     }
     
     private func hierarchy() {
-        view.addSubviews(profileImageView,
-                         profileLabel)
+        view.addSubviews(profileLabel, nextButton)
     }
     
     private func layout() {
-        profileImageView.snp.makeConstraints {
+        profileLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.size.equalTo(80)
         }
         
-        profileLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
-            $0.centerX.equalTo(profileImageView)
+        nextButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(profileLabel.snp.bottom).offset(100)
+            $0.height.equalTo(40)
+            $0.width.equalTo(80)
         }
         
     }
