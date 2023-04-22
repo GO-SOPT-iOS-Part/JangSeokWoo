@@ -94,6 +94,8 @@ extension SignInVC {
     // 이부분을 뷰모델이 했으면 좋겠다
     private func updateSignInButtonUI() {
         let isEnabled = idTextField.hasText && passwordTextField.hasText
+        
+        
         let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
         let borderColor: UIColor = isEnabled ? .tvingRed : .tvingLightGray
         
