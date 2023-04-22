@@ -14,6 +14,13 @@
 		87017FE829D7FB470044FAB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87017FE629D7FB470044FAB8 /* LaunchScreen.storyboard */; };
 		87017FF029D806AC0044FAB8 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87017FEF29D806AC0044FAB8 /* FirstViewController.swift */; };
 		87017FF529D80FDE0044FAB8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87017FF429D80FDE0044FAB8 /* SecondViewController.swift */; };
+		873B7F5929E13431003E2903 /* FirstViewController_DelegatePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */; };
+		873B7F5B29E1345F003E2903 /* SecondViewController_DelegatePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */; };
+		873B7F5E29E1419B003E2903 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 873B7F5D29E1419B003E2903 /* SnapKit */; };
+		873B7F6029E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F5F29E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift */; };
+		873B7F6229E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F6129E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift */; };
+		873B7F6629E14D2F003E2903 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F6529E14D2F003E2903 /* UIView+.swift */; };
+		873B7F6829E14E5A003E2903 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F6729E14E5A003E2903 /* UIImage+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,12 @@
 		87017FE929D7FB470044FAB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87017FEF29D806AC0044FAB8 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		87017FF429D80FDE0044FAB8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController_DelegatePattern.swift; sourceTree = "<group>"; };
+		873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController_DelegatePattern.swift; sourceTree = "<group>"; };
+		873B7F5F29E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController_Week2_FisrtPractice.swift; sourceTree = "<group>"; };
+		873B7F6129E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController_Week2_FirstPractice.swift; sourceTree = "<group>"; };
+		873B7F6529E14D2F003E2903 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		873B7F6729E14E5A003E2903 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				873B7F5E29E1419B003E2903 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				87017FF129D806B10044FAB8 /* Application */,
+				873B7F6329E14D0F003E2903 /* Global */,
 				87017FF229D806C10044FAB8 /* Resource */,
 				87017FF329D806EA0044FAB8 /* Presentation */,
 			);
@@ -87,11 +102,64 @@
 		87017FF329D806EA0044FAB8 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				873B7F5429E133E5003E2903 /* Week1 */,
+				873B7F5729E13405003E2903 /* Week2 */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		873B7F5429E133E5003E2903 /* Week1 */ = {
+			isa = PBXGroup;
+			children = (
 				87017FDF29D7FB460044FAB8 /* ViewController.swift */,
 				87017FEF29D806AC0044FAB8 /* FirstViewController.swift */,
 				87017FF429D80FDE0044FAB8 /* SecondViewController.swift */,
 			);
-			path = Presentation;
+			path = Week1;
+			sourceTree = "<group>";
+		};
+		873B7F5729E13405003E2903 /* Week2 */ = {
+			isa = PBXGroup;
+			children = (
+				873B7FA929E285CC003E2903 /* FirstPractice */,
+				873B7FAA29E285D3003E2903 /* SecondPractice */,
+				873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */,
+				873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */,
+			);
+			path = Week2;
+			sourceTree = "<group>";
+		};
+		873B7F6329E14D0F003E2903 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				873B7F6429E14D26003E2903 /* Extension */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		873B7F6429E14D26003E2903 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				873B7F6529E14D2F003E2903 /* UIView+.swift */,
+				873B7F6729E14E5A003E2903 /* UIImage+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		873B7FA929E285CC003E2903 /* FirstPractice */ = {
+			isa = PBXGroup;
+			children = (
+				873B7F5F29E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift */,
+				873B7F6129E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift */,
+			);
+			path = FirstPractice;
+			sourceTree = "<group>";
+		};
+		873B7FAA29E285D3003E2903 /* SecondPractice */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SecondPractice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +178,9 @@
 			dependencies = (
 			);
 			name = GO_SOPT_iOS_Seminar;
+			packageProductDependencies = (
+				873B7F5D29E1419B003E2903 /* SnapKit */,
+			);
 			productName = GO_SOPT_iOS_Seminar;
 			productReference = 87017FD829D7FB460044FAB8 /* GO_SOPT_iOS_Seminar.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +209,9 @@
 				Base,
 			);
 			mainGroup = 87017FCF29D7FB460044FAB8;
+			packageReferences = (
+				873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 87017FD929D7FB460044FAB8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -165,9 +239,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				87017FE029D7FB460044FAB8 /* ViewController.swift in Sources */,
+				873B7F6829E14E5A003E2903 /* UIImage+.swift in Sources */,
+				873B7F5929E13431003E2903 /* FirstViewController_DelegatePattern.swift in Sources */,
 				87017FDC29D7FB460044FAB8 /* AppDelegate.swift in Sources */,
+				873B7F6029E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift in Sources */,
+				873B7F6629E14D2F003E2903 /* UIView+.swift in Sources */,
 				87017FDE29D7FB460044FAB8 /* SceneDelegate.swift in Sources */,
+				873B7F5B29E1345F003E2903 /* SecondViewController_DelegatePattern.swift in Sources */,
 				87017FF529D80FDE0044FAB8 /* SecondViewController.swift in Sources */,
+				873B7F6229E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift in Sources */,
 				87017FF029D806AC0044FAB8 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +456,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		873B7F5D29E1419B003E2903 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 87017FD029D7FB460044FAB8 /* Project object */;
 }
