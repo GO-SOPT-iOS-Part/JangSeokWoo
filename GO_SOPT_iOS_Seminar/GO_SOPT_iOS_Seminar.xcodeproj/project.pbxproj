@@ -14,6 +14,16 @@
 		87017FE829D7FB470044FAB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87017FE629D7FB470044FAB8 /* LaunchScreen.storyboard */; };
 		87017FF029D806AC0044FAB8 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87017FEF29D806AC0044FAB8 /* FirstViewController.swift */; };
 		87017FF529D80FDE0044FAB8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87017FF429D80FDE0044FAB8 /* SecondViewController.swift */; };
+		8715618429F3B63E00745A16 /* Carrot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715618329F3B63E00745A16 /* Carrot.swift */; };
+		8715618629F3B64800745A16 /* CarrotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715618529F3B64800745A16 /* CarrotTableViewCell.swift */; };
+		8715618829F3B66D00745A16 /* Trade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715618729F3B66D00745A16 /* Trade.swift */; };
+		8715618B29F3B6BF00745A16 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 8715618A29F3B6BF00745A16 /* Then */; };
+		8715618D29F3B71F00745A16 /* CarrotImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715618C29F3B71F00745A16 /* CarrotImage+.swift */; };
+		8715618F29F3BA7700745A16 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715618E29F3BA7700745A16 /* Int+.swift */; };
+		8715619129F3C01000745A16 /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715619029F3C01000745A16 /* NSObject+.swift */; };
+		871BEC5129F3ADCA00FDD151 /* CarrotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BEC5029F3ADCA00FDD151 /* CarrotViewController.swift */; };
+		871BEC5429F3B14F00FDD151 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BEC5329F3B14F00FDD151 /* BaseViewController.swift */; };
+		871BEC5629F3B16A00FDD151 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BEC5529F3B16A00FDD151 /* BaseView.swift */; };
 		873B7F5929E13431003E2903 /* FirstViewController_DelegatePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */; };
 		873B7F5B29E1345F003E2903 /* SecondViewController_DelegatePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */; };
 		873B7F5E29E1419B003E2903 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 873B7F5D29E1419B003E2903 /* SnapKit */; };
@@ -33,6 +43,15 @@
 		87017FE929D7FB470044FAB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87017FEF29D806AC0044FAB8 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		87017FF429D80FDE0044FAB8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		8715618329F3B63E00745A16 /* Carrot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carrot.swift; sourceTree = "<group>"; };
+		8715618529F3B64800745A16 /* CarrotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrotTableViewCell.swift; sourceTree = "<group>"; };
+		8715618729F3B66D00745A16 /* Trade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trade.swift; sourceTree = "<group>"; };
+		8715618C29F3B71F00745A16 /* CarrotImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarrotImage+.swift"; sourceTree = "<group>"; };
+		8715618E29F3BA7700745A16 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		8715619029F3C01000745A16 /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
+		871BEC5029F3ADCA00FDD151 /* CarrotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrotViewController.swift; sourceTree = "<group>"; };
+		871BEC5329F3B14F00FDD151 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		871BEC5529F3B16A00FDD151 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController_DelegatePattern.swift; sourceTree = "<group>"; };
 		873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController_DelegatePattern.swift; sourceTree = "<group>"; };
 		873B7F5F29E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController_Week2_FisrtPractice.swift; sourceTree = "<group>"; };
@@ -47,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B7F5E29E1419B003E2903 /* SnapKit in Frameworks */,
+				8715618B29F3B6BF00745A16 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,10 +122,33 @@
 		87017FF329D806EA0044FAB8 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				871BEC5229F3B14700FDD151 /* Base */,
 				873B7F5429E133E5003E2903 /* Week1 */,
 				873B7F5729E13405003E2903 /* Week2 */,
+				871BEC4F29F3ADBA00FDD151 /* Week3 */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		871BEC4F29F3ADBA00FDD151 /* Week3 */ = {
+			isa = PBXGroup;
+			children = (
+				871BEC5029F3ADCA00FDD151 /* CarrotViewController.swift */,
+				8715618329F3B63E00745A16 /* Carrot.swift */,
+				8715618529F3B64800745A16 /* CarrotTableViewCell.swift */,
+				8715618729F3B66D00745A16 /* Trade.swift */,
+				8715618C29F3B71F00745A16 /* CarrotImage+.swift */,
+			);
+			path = Week3;
+			sourceTree = "<group>";
+		};
+		871BEC5229F3B14700FDD151 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				871BEC5329F3B14F00FDD151 /* BaseViewController.swift */,
+				871BEC5529F3B16A00FDD151 /* BaseView.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		873B7F5429E133E5003E2903 /* Week1 */ = {
@@ -123,8 +166,6 @@
 			children = (
 				873B7FA929E285CC003E2903 /* FirstPractice */,
 				873B7FAA29E285D3003E2903 /* SecondPractice */,
-				873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */,
-				873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */,
 			);
 			path = Week2;
 			sourceTree = "<group>";
@@ -142,6 +183,8 @@
 			children = (
 				873B7F6529E14D2F003E2903 /* UIView+.swift */,
 				873B7F6729E14E5A003E2903 /* UIImage+.swift */,
+				8715618E29F3BA7700745A16 /* Int+.swift */,
+				8715619029F3C01000745A16 /* NSObject+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -158,6 +201,8 @@
 		873B7FAA29E285D3003E2903 /* SecondPractice */ = {
 			isa = PBXGroup;
 			children = (
+				873B7F5829E13431003E2903 /* FirstViewController_DelegatePattern.swift */,
+				873B7F5A29E1345F003E2903 /* SecondViewController_DelegatePattern.swift */,
 			);
 			path = SecondPractice;
 			sourceTree = "<group>";
@@ -180,6 +225,7 @@
 			name = GO_SOPT_iOS_Seminar;
 			packageProductDependencies = (
 				873B7F5D29E1419B003E2903 /* SnapKit */,
+				8715618A29F3B6BF00745A16 /* Then */,
 			);
 			productName = GO_SOPT_iOS_Seminar;
 			productReference = 87017FD829D7FB460044FAB8 /* GO_SOPT_iOS_Seminar.app */;
@@ -211,6 +257,7 @@
 			mainGroup = 87017FCF29D7FB460044FAB8;
 			packageReferences = (
 				873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				8715618929F3B6BF00745A16 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 87017FD929D7FB460044FAB8 /* Products */;
 			projectDirPath = "";
@@ -238,17 +285,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				871BEC5429F3B14F00FDD151 /* BaseViewController.swift in Sources */,
 				87017FE029D7FB460044FAB8 /* ViewController.swift in Sources */,
+				8715618D29F3B71F00745A16 /* CarrotImage+.swift in Sources */,
+				8715618629F3B64800745A16 /* CarrotTableViewCell.swift in Sources */,
 				873B7F6829E14E5A003E2903 /* UIImage+.swift in Sources */,
+				8715619129F3C01000745A16 /* NSObject+.swift in Sources */,
 				873B7F5929E13431003E2903 /* FirstViewController_DelegatePattern.swift in Sources */,
+				8715618429F3B63E00745A16 /* Carrot.swift in Sources */,
+				871BEC5129F3ADCA00FDD151 /* CarrotViewController.swift in Sources */,
 				87017FDC29D7FB460044FAB8 /* AppDelegate.swift in Sources */,
 				873B7F6029E14AA8003E2903 /* FirstViewController_Week2_FisrtPractice.swift in Sources */,
+				8715618F29F3BA7700745A16 /* Int+.swift in Sources */,
 				873B7F6629E14D2F003E2903 /* UIView+.swift in Sources */,
 				87017FDE29D7FB460044FAB8 /* SceneDelegate.swift in Sources */,
 				873B7F5B29E1345F003E2903 /* SecondViewController_DelegatePattern.swift in Sources */,
 				87017FF529D80FDE0044FAB8 /* SecondViewController.swift in Sources */,
+				871BEC5629F3B16A00FDD151 /* BaseView.swift in Sources */,
 				873B7F6229E14AB8003E2903 /* SecondViewController_Week2_FirstPractice.swift in Sources */,
 				87017FF029D806AC0044FAB8 /* FirstViewController.swift in Sources */,
+				8715618829F3B66D00745A16 /* Trade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +514,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8715618929F3B6BF00745A16 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -469,6 +533,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8715618A29F3B6BF00745A16 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8715618929F3B6BF00745A16 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
 		873B7F5D29E1419B003E2903 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 873B7F5C29E1419B003E2903 /* XCRemoteSwiftPackageReference "SnapKit" */;
