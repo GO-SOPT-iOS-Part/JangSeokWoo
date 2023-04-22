@@ -114,8 +114,7 @@ extension SignInVC {
     @objc
     private func signInButtonDidTap() {
         let mainVC = MainVC()
-        guard let name = idTextField.text else { return }
-        mainVC.dataBind(name)
+        //guard let name = idTextField.text else { return }
         UIApplication.shared.changeRootViewController(mainVC)
     }
 }

@@ -38,7 +38,7 @@ final class ButtonBuilder: ButtonBuildable {
     //MARK: Custom Method
     
     @discardableResult
-    func setBackGroundColor(_ color: UIColor) -> Self {
+    func setBackgroundColor(_ color: UIColor) -> Self {
         button.backgroundColor = color
         return self
     }

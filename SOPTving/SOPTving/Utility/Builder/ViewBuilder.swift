@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ViewBuildable {
-    func setBackGroundColor(_ color: UIColor) -> Self
+    func setBackgroundColor(_ color: UIColor) -> Self
     func setCornerRadius(_ radius: CGFloat) -> Self
 }
 
@@ -32,7 +32,7 @@ class ViewBuilder: ViewBuildable {
     //MARK: Custom Method
     
     @discardableResult
-    func setBackGroundColor(_ color: UIColor) -> Self {
+    func setBackgroundColor(_ color: UIColor) -> Self {
         view.backgroundColor = color
         return self
     }
