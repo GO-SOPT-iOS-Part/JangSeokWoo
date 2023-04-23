@@ -37,6 +37,17 @@ final class MainVC: UIViewController {
         return label
     }()
     
+    private lazy var prevButton = ButtonBuilder()
+                                    .setTitle("이전으로",
+                                             color: .white,
+                                             font: .tvingSemiBold(ofSize: 16))
+                                    .setBackgroundColor(.systemBlue)
+                                    .setCornerRadius(12)
+                                    .setAction { [weak self] _ in
+                                        self?.prevButtonDidTap()
+                                    }
+                                    .build()
+    
     private lazy var nextButton = ButtonBuilder()
                                     .setTitle("다음으로",
                                              color: .white,
@@ -47,6 +58,7 @@ final class MainVC: UIViewController {
                                         self?.nextButtonDidTap()
                                     }
                                     .build()
+    
     
     //MARK: - Life Cycle
     
@@ -84,7 +96,7 @@ extension MainVC {
     
     private func setData() {
         dataLinkedList.append(data: data)
-        currentNode = dataLinkedList.getFirstNode()
+        currentNode = dataLinkedList.getHead()
     }
     
 }
@@ -94,6 +106,10 @@ extension MainVC {
 extension MainVC {
     func nextButtonDidTap() {
         currentNode = currentNode?.next
+    }
+    
+    func prevButtonDidTap() {
+        currentNode = currentNode?.prev
     }
 }
 
@@ -110,7 +126,7 @@ extension MainVC {
     }
     
     private func hierarchy() {
-        view.addSubviews(profileLabel, nextButton)
+        view.addSubviews(profileLabel, prevButton, nextButton)
     }
     
     private func layout() {
@@ -119,7 +135,14 @@ extension MainVC {
         }
         
         nextButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.centerX.equalToSuperview().offset(50)
+            $0.top.equalTo(profileLabel.snp.bottom).offset(100)
+            $0.height.equalTo(40)
+            $0.width.equalTo(80)
+        }
+        
+        prevButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(-50)
             $0.top.equalTo(profileLabel.snp.bottom).offset(100)
             $0.height.equalTo(40)
             $0.width.equalTo(80)

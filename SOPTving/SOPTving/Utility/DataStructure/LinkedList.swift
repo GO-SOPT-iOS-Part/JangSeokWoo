@@ -8,6 +8,7 @@
 import Foundation
 
 final class LinkedList<T> {
+    
     private var head: Node<T>?
     private var tail: Node<T>?
     
@@ -15,32 +16,31 @@ final class LinkedList<T> {
            return head == nil
        }
     
-    func append(data: T?) {
+    func append(data: T) {
         let newNode = Node(data)
         
         if isEmpty {
             head = newNode
             tail = newNode
-            tail?.next = head
         } else {
             tail?.next = newNode
+            newNode.prev = tail
             tail = newNode
-            tail?.next = head
         }
+        
+        head?.prev = tail
+        tail?.next = head
     }
     
     // append 인자에 배열을 넣었을 경우, append(T)를 반복한다.
-    func append(data: [T]?) {
-        guard let data else { return }
-        for t in data {
-            append(data: t)
+    func append(data: [T]) {
+        for d in data {
+            append(data: d)
         }
     }
     
-    func getFirstNode() -> Node<T>? {
+    func getHead() -> Node<T>? {
         return head
     }
-    
-
     
 }

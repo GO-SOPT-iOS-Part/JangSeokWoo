@@ -8,11 +8,13 @@
 import Foundation
 
 final class Node<T> {
-    var data: T?
+    var data: T
+    var prev: Node?
     var next: Node?
     
-    init(_ data: T?, next: Node? = nil) {
+    init(_ data: T, prev: Node? = nil, next: Node? = nil) {
         self.data = data
+        self.prev = prev
         self.next = next
     }
 }
