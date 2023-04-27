@@ -68,7 +68,7 @@ final class SignInVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
+        delegate()
         binding()
         style()
         hierarchy()
@@ -84,20 +84,13 @@ final class SignInVC: UIViewController {
 
 extension SignInVC {
     
-    private func target() {
-        emailTextField.setUpdateHandler { [weak self] text in
-            guard let self else { return }
-            self.viewModel.idTextFieldDidChangeEvent(text)
-        }
-        
-        passwordTextField.setUpdateHandler { [weak self] text in
-            guard let self else { return }
-            self.viewModel.passwordTextFieldDidChangeEvent(text)
-        }
+    private func delegate() {
+        emailTextField.authDelegate = self
+        passwordTextField.authDelegate = self
     }
     
     private func binding() {
-        viewModel.ableToLogin.observe(on: self) { [weak self] isEnabled in
+        viewModel.ableToSignIn.observe(on: self) { [weak self] isEnabled in
             self?.updateSignInButtonUI(isEnabled)
         }
         viewModel.isSuccessLogin.observe(on: self) { [weak self] result in
@@ -195,3 +188,14 @@ extension SignInVC {
     }
 }
 
+extension SignInVC: AuthTextFieldDelegate {
+    func authTextFieldTextDidChange(_ textFieldType: AuthTextField.TextFieldType, text: String) {
+        switch textFieldType {
+            
+        case .email:
+            self.viewModel.emailTextFieldDidChangeEvent(text)
+        case .password:
+            self.viewModel.passwordTextFieldDidChangeEvent(text)
+        }
+    }
+}

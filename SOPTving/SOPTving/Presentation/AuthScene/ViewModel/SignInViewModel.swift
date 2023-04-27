@@ -14,13 +14,13 @@ enum AuthError: Error {
 }
 
 protocol SignInViewModelInput {
-    func idTextFieldDidChangeEvent(_ text: String)
+    func emailTextFieldDidChangeEvent(_ text: String)
     func passwordTextFieldDidChangeEvent(_ text: String)
     func signInButtonDidTapEvent()
 }
 
 protocol SignInViewModelOutput {
-    var ableToLogin: Observable<Bool> { get }
+    var ableToSignIn: Observable<Bool> { get }
     var isSuccessLogin: Observable<Result<Bool,AuthError>> { get }
 }
 
@@ -33,7 +33,7 @@ final class DefaultSignInViewModel: SignInViewModel {
     
     //MARK: - Output
     
-    var ableToLogin: Observable<Bool> = Observable(false)
+    var ableToSignIn: Observable<Bool> = Observable(false)
     var isSuccessLogin: Observable<Result<Bool,AuthError>> = Observable(.failure(.invalidEmail))
     
     //MARK: - Init
@@ -47,14 +47,14 @@ final class DefaultSignInViewModel: SignInViewModel {
 
 extension DefaultSignInViewModel {
     
-    func idTextFieldDidChangeEvent(_ text: String) {
+    func emailTextFieldDidChangeEvent(_ text: String) {
         self.email = text
-        self.ableToLogin.value = email.hasText && password.hasText
+        self.ableToSignIn.value = email.hasText && password.hasText
     }
     
     func passwordTextFieldDidChangeEvent(_ text: String) {
         self.password = text
-        self.ableToLogin.value = email.hasText && password.hasText
+        self.ableToSignIn.value = email.hasText && password.hasText
     }
     
     func signInButtonDidTapEvent() {
@@ -76,6 +76,5 @@ extension DefaultSignInViewModel {
         }
         
         isSuccessLogin.value = .success(true)
-        
     }
 }
