@@ -7,15 +7,21 @@
 
 import Foundation
 
+enum AuthError: Error {
+    case invalidEmail
+    case invlidPassword
+    case invalidUser
+}
+
 protocol SignInViewModelInput {
     func idTextFieldDidChangeEvent(_ text: String)
     func passwordTextFieldDidChangeEvent(_ text: String)
+    func signInButtonDidTapEvent()
 }
 
 protocol SignInViewModelOutput {
-    var isValidEmail: Observable<Bool> { get }
-    var isValidPassword: Observable<Bool> { get }
     var ableToLogin: Observable<Bool> { get }
+    var isSuccessLogin: Observable<Result<Bool,AuthError>> { get }
 }
 
 protocol SignInViewModel: SignInViewModelInput, SignInViewModelOutput { }
@@ -27,9 +33,8 @@ final class DefaultSignInViewModel: SignInViewModel {
     
     //MARK: - Output
     
-    var isValidEmail: Observable<Bool> = Observable(false)
-    var isValidPassword: Observable<Bool> = Observable(false)
     var ableToLogin: Observable<Bool> = Observable(false)
+    var isSuccessLogin: Observable<Result<Bool,AuthError>> = Observable(.failure(.invalidEmail))
     
     //MARK: - Init
     
@@ -43,13 +48,34 @@ final class DefaultSignInViewModel: SignInViewModel {
 extension DefaultSignInViewModel {
     
     func idTextFieldDidChangeEvent(_ text: String) {
-        self.isValidEmail.value = text.isEmailFormat && text.isMoreThan(8)
-        self.ableToLogin.value = isValidEmail.value && isValidPassword.value
+        self.email = text
+        self.ableToLogin.value = email.hasText && password.hasText
     }
     
     func passwordTextFieldDidChangeEvent(_ text: String) {
-        self.isValidPassword.value = text.isMoreThan(8)
-        self.ableToLogin.value = isValidEmail.value && isValidPassword.value
+        self.password = text
+        self.ableToLogin.value = email.hasText && password.hasText
     }
     
+    func signInButtonDidTapEvent() {
+        let isValidEmail = email.isEmailFormat
+        let isValidPassword = password.isMoreThan(8)
+        let isExistedUser = true //    나중에 서버 통신 후 해당 값 isExistedUser에 대입. 임시적으로 true
+        
+        guard isValidEmail else {
+            isSuccessLogin.value = .failure(.invalidEmail)
+            return
+        }
+        guard isValidPassword else {
+            isSuccessLogin.value = .failure(.invlidPassword)
+            return
+        }
+        guard isExistedUser else {
+            isSuccessLogin.value = .failure(.invalidUser)
+            return
+        }
+        
+        isSuccessLogin.value = .success(true)
+        
+    }
 }

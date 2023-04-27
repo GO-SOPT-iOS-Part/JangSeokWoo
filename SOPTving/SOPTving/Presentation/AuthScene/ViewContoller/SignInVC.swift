@@ -97,13 +97,23 @@ extension SignInVC {
     }
     
     private func binding() {
-        viewModel.isValidEmail.observe(on: self) { bool in
-            
+        viewModel.ableToLogin.observe(on: self) { [weak self] isEnabled in
+            self?.updateSignInButtonUI(isEnabled)
         }
-        viewModel.isValidPassword
-        viewModel.ableToLogin.observe(on: self) { isEnabled in
-            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
-            self.updateSignInButtonUI(isEnabled)
+        viewModel.isSuccessLogin.observe(on: self) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.goToMainVC()
+            case .failure(let error):
+                switch error {
+                case .invalidEmail:
+                    self?.presentBottomAlert("이메일 형식이 맞지 않습니다.")
+                case .invlidPassword:
+                    self?.presentBottomAlert("비밀번호를 8자 이상 입력해주세요.")
+                case .invalidUser:
+                    self?.presentBottomAlert("존재하지 않는 회원입니다.")
+                }
+            }
         }
     }
     
@@ -118,6 +128,11 @@ extension SignInVC {
         signInButton.isEnabled = isEnabled
     }
     
+    private func goToMainVC() {
+        let mainVC = MainVC()
+        UIApplication.shared.changeRootViewController(mainVC)
+    }
+    
     //MARK: - Action
     
     @objc
@@ -127,8 +142,7 @@ extension SignInVC {
     
     @objc
     private func signInButtonDidTap() {
-        let mainVC = MainVC()
-        UIApplication.shared.changeRootViewController(mainVC)
+        viewModel.signInButtonDidTapEvent()
     }
 }
 
