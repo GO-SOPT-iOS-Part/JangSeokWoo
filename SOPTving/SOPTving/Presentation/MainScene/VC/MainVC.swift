@@ -10,41 +10,75 @@ import UIKit
 import SnapKit
 import Then
 
-class MainVC: UIViewController {
+final class MainVC: UIViewController {
     
     //MARK: - Properties
     
-    private var name: String? {
+    var mainTitle: String? {
         didSet {
             updateUI()
         }
     }
     
-    //MARK: - UI Components
+    private var data: [String] = ["처음", "중간", "마지막"]
     
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "profile_tving.cute")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+    private var currentNode : Node<String>? {
+        didSet{ mainTitle = currentNode?.data }
+    }
+    private var dataLinkedList = LinkedList<String>()
+    
+    //MARK: - UI Components
     
     private let profileLabel: UILabel = {
         let label = UILabel()
         label.font = .tvingSemiBold(ofSize: 20)
+        label.text = "asdf"
         label.textColor = .white
         return label
     }()
+    
+    private lazy var prevButton = ButtonBuilder()
+                                    .setTitle("이전으로",
+                                             color: .white,
+                                             font: .tvingSemiBold(ofSize: 16))
+                                    .setBackgroundColor(.systemBlue)
+                                    .setCornerRadius(12)
+                                    .setAction { [weak self] _ in
+                                        self?.prevButtonDidTap()
+                                    }
+                                    .build()
+    
+    private lazy var nextButton = ButtonBuilder()
+                                    .setTitle("다음으로",
+                                             color: .white,
+                                             font: .tvingSemiBold(ofSize: 16))
+                                    .setBackgroundColor(.systemBlue)
+                                    .setCornerRadius(12)
+                                    .setAction { [weak self] _ in
+                                        self?.nextButtonDidTap()
+                                    }
+                                    .build()
+    
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        binding()
         style()
         hierarchy()
         layout()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setData()
     }
     
 }
@@ -53,20 +87,30 @@ class MainVC: UIViewController {
 
 extension MainVC {
     
-    private func binding() {
-        
-    }
-    
     private func updateUI() {
-        profileLabel.text = name
+        profileLabel.text = mainTitle
     }
+
     
     //MARK: Public
     
-    public func dataBind(_ text: String) {
-        self.name = text
+    private func setData() {
+        dataLinkedList.append(data: data)
+        currentNode = dataLinkedList.getHead()
     }
     
+}
+
+//MARK: - Action Method
+
+extension MainVC {
+    func nextButtonDidTap() {
+        currentNode = currentNode?.next
+    }
+    
+    func prevButtonDidTap() {
+        currentNode = currentNode?.prev
+    }
 }
 
 
@@ -82,19 +126,26 @@ extension MainVC {
     }
     
     private func hierarchy() {
-        view.addSubviews(profileImageView,
-                         profileLabel)
+        view.addSubviews(profileLabel, prevButton, nextButton)
     }
     
     private func layout() {
-        profileImageView.snp.makeConstraints {
+        profileLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.size.equalTo(80)
         }
         
-        profileLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
-            $0.centerX.equalTo(profileImageView)
+        nextButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(50)
+            $0.top.equalTo(profileLabel.snp.bottom).offset(100)
+            $0.height.equalTo(40)
+            $0.width.equalTo(80)
+        }
+        
+        prevButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(-50)
+            $0.top.equalTo(profileLabel.snp.bottom).offset(100)
+            $0.height.equalTo(40)
+            $0.width.equalTo(80)
         }
         
     }

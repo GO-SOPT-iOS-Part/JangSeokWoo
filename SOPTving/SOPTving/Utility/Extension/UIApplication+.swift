@@ -16,9 +16,12 @@ extension UIApplication {
         let firstWindow = windowScenes?.windows.filter { $0.isKeyWindow }.first
         firstWindow?.rootViewController = viewController
         firstWindow?.makeKeyAndVisible()
+        
         UIView.transition(with: firstWindow!,
                           duration: 0.5,
                           options: .transitionCrossDissolve,
                           animations: nil)
     }
+    
+    
 }
