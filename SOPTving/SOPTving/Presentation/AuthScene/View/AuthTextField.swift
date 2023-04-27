@@ -10,15 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
-protocol AuthTextFieldDelegate: UITextFieldDelegate {
+protocol AuthTextFieldDelegate: AnyObject {
     func authTextFieldTextDidChange(_ textFieldType: AuthTextField.TextFieldType, text: String)
+    func authTextFieldDidReturn(_ textFieldType: AuthTextField.TextFieldType)
 }
 
 final class AuthTextField : UITextField {
     
     //MARK: - Properties
     
-    weak var authDelegate: AuthTextFieldDelegate?
     
     enum TextFieldType {
         case email
@@ -38,6 +38,8 @@ final class AuthTextField : UITextField {
     }
     
     private var textFieldType: TextFieldType
+    weak var authDelegate: AuthTextFieldDelegate?
+    
     
     //MARK: - UI Components
     
@@ -153,7 +155,7 @@ extension AuthTextField: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        endEditing(true)
+        authDelegate?.authTextFieldDidReturn(textFieldType)
         return true
     }
     
@@ -162,8 +164,8 @@ extension AuthTextField: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        updateClearButtonUI()
         guard let text = textField.text else { return}
+        updateClearButtonUI()
         authDelegate?.authTextFieldTextDidChange(textFieldType, text: text)
     }
 

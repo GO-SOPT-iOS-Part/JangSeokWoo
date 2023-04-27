@@ -79,12 +79,12 @@ final class AuthTextFieldDirector {
         self.builder = builder
     }
     
-    func buildIDTextField() -> AuthTextField {
+    func buildEmailTextField() -> AuthTextField {
         
         builder = AuthTextFieldBuilder(viewType: .email)
-                                        .setLeftPaddingAmount(20)
-                                        .setText(color: .white, font: .tvingMedium(ofSize: 16))
+                                        .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
                                         .setPlaceholder(text: "아이디", color: .tvingLightGray)
+                                        .setLeftPaddingAmount(22)
                                         .setCornerRadius(6)
                                         .addRightButton(.clearButton)
         guard let builder else { return AuthTextField() }

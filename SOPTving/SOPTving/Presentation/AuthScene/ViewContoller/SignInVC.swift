@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 
 import SnapKit
 import Then
@@ -33,20 +32,7 @@ final class SignInVC: UIViewController {
         $0.textColor = .white
     }
     
-    //  빌더패턴
-    //  그냥 TextField에 프로퍼티 줄어든 버전이랄까
-    //  기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
-    //  addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
-    private let emailTextField = AuthTextFieldBuilder(viewType: .email)
-                                .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
-                                .setPlaceholder(text: "아이디", color: .tvingLightGray)
-                                .setLeftPaddingAmount(22)
-                                .setCornerRadius(6)
-                                .addRightButton(.clearButton)
-                                .build()
-    
-    // 빌더 패턴에 디럭터 패턴까지 적용시킨 버전
-    // 디렉터까지 하면 모듈화하긴 좋을듯
+    private let emailTextField = AuthTextFieldDirector().buildEmailTextField()
     private let passwordTextField = AuthTextFieldDirector().buildPasswordTextField()
     
     private lazy var signInButton = UIButton().then {
@@ -69,10 +55,17 @@ final class SignInVC: UIViewController {
         super.viewDidLoad()
         
         delegate()
-        binding()
+        bind()
+        
         style()
         hierarchy()
         layout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        emailTextField.becomeFirstResponder()
     }
     
     required init?(coder: NSCoder) {
@@ -89,28 +82,21 @@ extension SignInVC {
         passwordTextField.authDelegate = self
     }
     
-    private func binding() {
+    private func bind() {
         viewModel.ableToSignIn.observe(on: self) { [weak self] isEnabled in
             self?.updateSignInButtonUI(isEnabled)
         }
+        
         viewModel.isSuccessLogin.observe(on: self) { [weak self] result in
             switch result {
             case .success(_):
                 self?.goToMainVC()
             case .failure(let error):
-                switch error {
-                case .invalidEmail:
-                    self?.presentBottomAlert("이메일 형식이 맞지 않습니다.")
-                case .invlidPassword:
-                    self?.presentBottomAlert("비밀번호를 8자 이상 입력해주세요.")
-                case .invalidUser:
-                    self?.presentBottomAlert("존재하지 않는 회원입니다.")
-                }
+                self?.presentTopAlert(error.message)
             }
         }
     }
     
-    // 이부분을 뷰모델이 했으면 좋겠다
     private func updateSignInButtonUI(_ isEnabled: Bool) {
     
         let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
@@ -135,6 +121,7 @@ extension SignInVC {
     
     @objc
     private func signInButtonDidTap() {
+        view.endEditing(true)
         viewModel.signInButtonDidTapEvent()
     }
 }
@@ -188,10 +175,23 @@ extension SignInVC {
     }
 }
 
+//MARK: - AuthTextFieldDelegate
+
 extension SignInVC: AuthTextFieldDelegate {
+    
+    func authTextFieldDidReturn(_ textFieldType: AuthTextField.TextFieldType) {
+        switch textFieldType {
+        case .email:
+            passwordTextField.becomeFirstResponder()
+        case .password:
+            view.endEditing(true)
+            signInButtonDidTap()
+        }
+    }
+    
+    
     func authTextFieldTextDidChange(_ textFieldType: AuthTextField.TextFieldType, text: String) {
         switch textFieldType {
-            
         case .email:
             self.viewModel.emailTextFieldDidChangeEvent(text)
         case .password:
