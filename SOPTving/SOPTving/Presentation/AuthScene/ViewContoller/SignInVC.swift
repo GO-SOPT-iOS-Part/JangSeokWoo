@@ -37,7 +37,7 @@ final class SignInVC: UIViewController {
     //  그냥 TextField에 프로퍼티 줄어든 버전이랄까
     //  기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
     //  addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
-    private let idTextField = AuthTextFieldBuilder(viewType: .id)
+    private let emailTextField = AuthTextFieldBuilder(viewType: .email)
                                 .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
                                 .setPlaceholder(text: "아이디", color: .tvingLightGray)
                                 .setLeftPaddingAmount(22)
@@ -73,7 +73,6 @@ final class SignInVC: UIViewController {
         style()
         hierarchy()
         layout()
-        updateSignInButtonUI()
     }
     
     required init?(coder: NSCoder) {
@@ -86,26 +85,31 @@ final class SignInVC: UIViewController {
 extension SignInVC {
     
     private func target() {
-        idTextField.setUpdateHandler { [weak self] in
+        emailTextField.setUpdateHandler { [weak self] text in
             guard let self else { return }
-            self.updateSignInButtonUI()
+            self.viewModel.idTextFieldDidChangeEvent(text)
         }
         
-        passwordTextField.setUpdateHandler { [weak self] in
+        passwordTextField.setUpdateHandler { [weak self] text in
             guard let self else { return }
-            self.updateSignInButtonUI()
+            self.viewModel.passwordTextFieldDidChangeEvent(text)
         }
     }
     
     private func binding() {
-        
+        viewModel.isValidEmail.observe(on: self) { bool in
+            
+        }
+        viewModel.isValidPassword
+        viewModel.ableToLogin.observe(on: self) { isEnabled in
+            print("🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏🙏")
+            self.updateSignInButtonUI(isEnabled)
+        }
     }
     
     // 이부분을 뷰모델이 했으면 좋겠다
-    private func updateSignInButtonUI() {
-        let isEnabled = idTextField.hasText && passwordTextField.hasText
-        
-        
+    private func updateSignInButtonUI(_ isEnabled: Bool) {
+    
         let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
         let borderColor: UIColor = isEnabled ? .tvingRed : .tvingLightGray
         
@@ -139,7 +143,7 @@ extension SignInVC {
     private func hierarchy() {
         view.addSubviews(backButton,
                          titleLabel,
-                         idTextField,
+                         emailTextField,
                          passwordTextField,
                          signInButton)
     }
@@ -157,16 +161,16 @@ extension SignInVC {
             $0.top.equalToSuperview().offset(50)
         }
         
-        idTextField.snp.makeConstraints {
+        emailTextField.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(31)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(52)
         }
         
         passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(idTextField.snp.bottom).offset(10)
-            $0.leading.trailing.equalTo(idTextField)
-            $0.height.equalTo(idTextField)
+            $0.top.equalTo(emailTextField.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(emailTextField)
+            $0.height.equalTo(emailTextField)
         }
         
         signInButton.snp.makeConstraints {

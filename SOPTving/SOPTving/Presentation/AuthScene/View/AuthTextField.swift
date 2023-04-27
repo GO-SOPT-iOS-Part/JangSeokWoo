@@ -14,16 +14,16 @@ final class AuthTextField : UITextField {
     
     //MARK: - Properties
     
-    typealias handler = (() -> Void)
+    typealias handler = ((String) -> Void)
     private var updateHandler: handler?
     
     enum TextFieldType {
-        case id
+        case email
         case password
         
         var isSecureTextEntry: Bool {
             switch self {
-            case .id: return false
+            case .email: return false
             case .password: return true
             }
         }
@@ -71,7 +71,7 @@ final class AuthTextField : UITextField {
     
     //MARK: - Life Cycle
     
-    init(viewType: TextFieldType = .id) {
+    init(viewType: TextFieldType = .email) {
         self.textFieldType = viewType
         super.init(frame: .zero)
         
@@ -164,7 +164,8 @@ extension AuthTextField: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateClearButtonUI()
-        updateHandler?()
+        guard let text = textField.text else { return}
+        updateHandler?(text)
     }
 
 }
