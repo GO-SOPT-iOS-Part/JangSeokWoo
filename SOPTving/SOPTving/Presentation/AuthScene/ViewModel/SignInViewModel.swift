@@ -11,6 +11,18 @@ enum AuthError: Error {
     case invalidEmail
     case invlidPassword
     case invalidUser
+    
+    var message: String {
+        switch self {
+
+        case .invalidEmail:
+            return "이메일형식을 잘못 입력하셨습니다."
+        case .invlidPassword:
+            return "비밀번호를 8자 이상 입력해주세요."
+        case .invalidUser:
+            return "존재하지 않는 회원입니다."
+        }
+    }
 }
 
 protocol SignInViewModelInput {
