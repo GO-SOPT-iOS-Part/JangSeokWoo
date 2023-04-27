@@ -15,6 +15,8 @@ final class SignInVC: UIViewController {
     
     //MARK: - Properties
     
+    private let viewModel: SignInViewModel
+
     //MARK: - UI Components
     
     private lazy var backButton = UIButton().then {
@@ -58,6 +60,11 @@ final class SignInVC: UIViewController {
     
     //MARK: - Life Cycle
     
+    init(viewModel: SignInViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,6 +76,9 @@ final class SignInVC: UIViewController {
         updateSignInButtonUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 //MARK: - Methods
@@ -114,7 +124,6 @@ extension SignInVC {
     @objc
     private func signInButtonDidTap() {
         let mainVC = MainVC()
-        //guard let name = idTextField.text else { return }
         UIApplication.shared.changeRootViewController(mainVC)
     }
 }

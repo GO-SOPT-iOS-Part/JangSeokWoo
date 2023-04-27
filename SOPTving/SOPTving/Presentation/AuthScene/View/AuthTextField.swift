@@ -34,7 +34,7 @@ final class AuthTextField : UITextField {
         case hideButton
     }
     
-    private var textFieldType: TextFieldType = .id
+    private var textFieldType: TextFieldType
     
     //MARK: - UI Components
     
