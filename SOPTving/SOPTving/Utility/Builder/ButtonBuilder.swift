@@ -9,7 +9,7 @@ import UIKit
 
 protocol ButtonBuildable: ViewBuildable {
     
-    func setTitle(_ text: String,
+    func setTitle(_ text: String?,
                  color: UIColor,
                  font: UIFont,
                  state: UIControl.State ) -> Self
@@ -50,7 +50,7 @@ final class ButtonBuilder: ButtonBuildable {
     }
     
     @discardableResult
-    func setTitle(_ text: String,
+    func setTitle(_ text: String?,
                  color: UIColor,
                  font: UIFont ,
                  state: UIControl.State = .normal) -> Self {

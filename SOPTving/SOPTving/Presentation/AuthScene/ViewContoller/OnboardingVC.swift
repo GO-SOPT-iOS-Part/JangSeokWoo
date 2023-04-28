@@ -55,8 +55,11 @@ extension OnboardingVC {
     
     @objc
     private func startButtonDidTap() {
-        let signInVC = SignInVC(viewModel: DefaultSignInViewModel(email: "", password: ""))
-        present(signInVC, animated: true)
+//        let signInVC = SignInVC(viewModel: DefaultSignInViewModel(email: "", password: ""))
+//        present(signInVC, animated: true)
+        
+        let myPageVC = MyPageVC(viewModel: DefaultMyPageViewModel(profileData: MyProfile.dummyData()))
+        navigationController?.pushViewController(myPageVC, animated: true)
     }
 }
 

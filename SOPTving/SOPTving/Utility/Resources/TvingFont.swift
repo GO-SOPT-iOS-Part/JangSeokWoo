@@ -9,6 +9,10 @@ import UIKit
 
 extension UIFont {
     
+    static func tvingBold(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "Pretendard-Bold", size: size)!
+    }
+    
     static func tvingSemiBold(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: "Pretendard-SemiBold", size: size)!
     }
