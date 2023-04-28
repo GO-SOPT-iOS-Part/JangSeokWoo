@@ -24,6 +24,8 @@ final class DefaultMyPageViewModel: MyPageViewModel {
     
     private var profileData: MyProfile
     
+    
+    
     //MARK: - Output
     
     
@@ -35,9 +37,8 @@ final class DefaultMyPageViewModel: MyPageViewModel {
         self.profileData = profileData
     }
     
-    
-    
     //MARK: - Private
+    
     
 }
 

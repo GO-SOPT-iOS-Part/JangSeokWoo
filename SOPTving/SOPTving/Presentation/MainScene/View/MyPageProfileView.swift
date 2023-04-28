@@ -180,11 +180,11 @@ extension MyPageProfileView {
         }
         
         nameButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(profileImageView)
             $0.leading.equalTo(profileImageView.snp.trailing)
         }
         profileChangeButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(profileImageView)
             $0.trailing.equalToSuperview()
             $0.height.equalTo(30)
             $0.width.equalTo(80)
@@ -194,6 +194,7 @@ extension MyPageProfileView {
             $0.top.equalTo(profileImageView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(100)
+            $0.bottom.equalToSuperview()
         }
         
         darkStackView.snp.makeConstraints {

@@ -13,6 +13,7 @@ final class MyPageVC: UIViewController {
     
     //MARK: - Properties
     
+    private var myPageSettingData = MyPageSetting()
     private let viewModel: MyPageViewModel
 
     //MARK: - UI Components
@@ -45,6 +46,16 @@ final class MyPageVC: UIViewController {
     
     private let profileView = MyPageProfileView()
     
+    private let tableView : UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.register(MyPageSettingTableViewCell.self,
+                           forCellReuseIdentifier: MyPageSettingTableViewCell.className)
+        return tableView
+    }()
+    
     
     //MARK: - Life Cycle
     
@@ -60,7 +71,6 @@ final class MyPageVC: UIViewController {
         
         delegate()
         
-        
         style()
         hierarchy()
         layout()
@@ -69,6 +79,13 @@ final class MyPageVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.snp.updateConstraints {
+            $0.height.equalTo(tableView.contentSize.height)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -81,7 +98,8 @@ final class MyPageVC: UIViewController {
 extension MyPageVC {
     
     private func delegate() {
-        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func bind() {
@@ -114,7 +132,7 @@ extension MyPageVC {
         navigationView.addSubview(backButton)
         
         scrollView.addSubview(contentView)
-        contentView.addSubviews(profileView)
+        contentView.addSubviews(profileView,tableView)
     }
     
     private func layout() {
@@ -145,9 +163,86 @@ extension MyPageVC {
         profileView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(100)
-            $0.bottom.equalToSuperview()
         }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(profileView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(tableView.contentSize.height)
+            $0.bottom.equalToSuperview().offset(-30)
+        }
+        
+        
     }
 }
 
+//MARK: - UITableViewDelegate
+
+extension MyPageVC: UITableViewDelegate {
+    
+}
+
+extension MyPageVC: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return myPageSettingData.userSetting.count
+        case 1:
+            return myPageSettingData.appSetting.count
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyPageSettingTableViewCell.className, for: indexPath) as? MyPageSettingTableViewCell
+        else { return UITableViewCell()}
+        
+        switch indexPath.section {
+        case 0:
+            cell.dataBind(myPageSettingData.userSetting[indexPath.row])
+            
+        case 1:
+            cell.dataBind(myPageSettingData.appSetting[indexPath.row])
+        default:
+            fatalError("\(#function)에서 에러가 발생했습니다.")
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 54
+    }
+}
+
+extension MyPageVC {
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return MyPageSettingFooterView(isLastSection: false).intrinsicContentSize.height
+        case 1:
+            return MyPageSettingFooterView(isLastSection: true).intrinsicContentSize.height
+        default:
+            return 0
+            
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        switch section {
+        case 0:
+            return MyPageSettingFooterView(isLastSection: false)
+        case 1:
+            return MyPageSettingFooterView(isLastSection: true)
+        default:
+            return nil
+        }
+    }
+}

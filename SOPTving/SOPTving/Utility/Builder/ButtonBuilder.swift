@@ -20,6 +20,7 @@ protocol ButtonBuildable: ViewBuildable {
     
     func setAction(event: UIControl.Event,
                    handler: @escaping UIActionHandler) -> Self
+
 }
 
 //MARK: - Builder
