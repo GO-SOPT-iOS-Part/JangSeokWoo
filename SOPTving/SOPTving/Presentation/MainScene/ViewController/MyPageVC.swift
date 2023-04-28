@@ -111,10 +111,8 @@ extension MyPageVC {
     
     @objc
     private func backButtonDidTap() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
-    
-    
 }
 
 //MARK: - UI & Layout

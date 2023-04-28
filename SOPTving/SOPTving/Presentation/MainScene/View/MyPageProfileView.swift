@@ -94,31 +94,26 @@ final class MyPageProfileView: UIView {
                                                   font: .tvingBold(ofSize: 16))
                                         .build()
     
-    private lazy var memberShipStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [memberShipImageView,
-                                                       memberShipLabel,
-                                                       myMemberShipButton])
+    private let memberShipStackView: UIStackView = {
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 8
-        memberShipLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        return stackView
-    }()
-    
-    private lazy var cashStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [cashImageView,
-                                                       cashLabel,
-                                                       myCashButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.spacing = 8
         return stackView
     }()
     
-    private lazy var darkStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [memberShipStackView, cashStackView])
+    private let cashStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private let darkStackView: UIStackView = {
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
         stackView.alignment = .fill
@@ -169,6 +164,16 @@ extension MyPageProfileView {
                          profileChangeButton,
                          darkView)
         
+        memberShipStackView.addArrangedSubViews(memberShipImageView,
+                                                memberShipLabel,
+                                                myMemberShipButton)
+        
+        cashStackView.addArrangedSubViews(cashImageView,
+                                          cashLabel,
+                                          myCashButton)
+        
+        darkStackView.addArrangedSubViews(memberShipStackView, cashStackView)
+        
         darkView.addSubviews(darkStackView)
     }
     
@@ -204,17 +209,17 @@ extension MyPageProfileView {
         memberShipImageView.snp.makeConstraints {
             $0.size.equalTo(23)
         }
-        
+
         cashImageView.snp.makeConstraints {
             $0.size.equalTo(23)
         }
         
         memberShipLabel.snp.makeConstraints {
-            $0.width.lessThanOrEqualToSuperview().priority(200)
+            $0.width.greaterThanOrEqualTo(memberShipImageView)
         }
         
         cashLabel.snp.makeConstraints {
-            $0.width.lessThanOrEqualToSuperview().priority(200)
+            $0.width.greaterThanOrEqualTo(cashImageView)
         }
     }
 }
