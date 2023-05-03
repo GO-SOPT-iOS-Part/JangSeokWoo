@@ -10,20 +10,23 @@ import UIKit
 import SnapKit
 import Then
 
+protocol AuthTextFieldDelegate: AnyObject {
+    func authTextFieldTextDidChange(_ textFieldType: AuthTextField.TextFieldType, text: String)
+    func authTextFieldDidReturn(_ textFieldType: AuthTextField.TextFieldType)
+}
+
 final class AuthTextField : UITextField {
     
     //MARK: - Properties
     
-    typealias handler = (() -> Void)
-    private var updateHandler: handler?
     
     enum TextFieldType {
-        case id
+        case email
         case password
         
         var isSecureTextEntry: Bool {
             switch self {
-            case .id: return false
+            case .email: return false
             case .password: return true
             }
         }
@@ -34,7 +37,9 @@ final class AuthTextField : UITextField {
         case hideButton
     }
     
-    private var textFieldType: TextFieldType = .id
+    private var textFieldType: TextFieldType
+    weak var authDelegate: AuthTextFieldDelegate?
+    
     
     //MARK: - UI Components
     
@@ -71,7 +76,7 @@ final class AuthTextField : UITextField {
     
     //MARK: - Life Cycle
     
-    init(viewType: TextFieldType = .id) {
+    init(viewType: TextFieldType = .email) {
         self.textFieldType = viewType
         super.init(frame: .zero)
         
@@ -127,10 +132,6 @@ final class AuthTextField : UITextField {
         }
     }
     
-    public func setUpdateHandler(updateHandler: @escaping handler) {
-        self.updateHandler = updateHandler
-    }
-    
     //MARK: - Action Method
     
     @objc
@@ -154,7 +155,7 @@ extension AuthTextField: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        endEditing(true)
+        authDelegate?.authTextFieldDidReturn(textFieldType)
         return true
     }
     
@@ -163,8 +164,9 @@ extension AuthTextField: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return}
         updateClearButtonUI()
-        updateHandler?()
+        authDelegate?.authTextFieldTextDidChange(textFieldType, text: text)
     }
 
 }

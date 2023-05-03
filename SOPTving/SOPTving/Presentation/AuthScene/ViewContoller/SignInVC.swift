@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 
 import SnapKit
 import Then
@@ -15,6 +14,8 @@ final class SignInVC: UIViewController {
     
     //MARK: - Properties
     
+    private let viewModel: SignInViewModel
+
     //MARK: - UI Components
     
     private lazy var backButton = UIButton().then {
@@ -31,20 +32,7 @@ final class SignInVC: UIViewController {
         $0.textColor = .white
     }
     
-    //  빌더패턴
-    //  그냥 TextField에 프로퍼티 줄어든 버전이랄까
-    //  기본 프로퍼티만 추가할땐 그닥 효율성 못느낌.
-    //  addRightButton 과 같은 함수 추가할땐 좋은 패턴인듯.
-    private let idTextField = AuthTextFieldBuilder(viewType: .id)
-                                .setText(color: .white, font: .tvingSemiBold(ofSize: 16))
-                                .setPlaceholder(text: "아이디", color: .tvingLightGray)
-                                .setLeftPaddingAmount(22)
-                                .setCornerRadius(6)
-                                .addRightButton(.clearButton)
-                                .build()
-    
-    // 빌더 패턴에 디럭터 패턴까지 적용시킨 버전
-    // 디렉터까지 하면 모듈화하긴 좋을듯
+    private let emailTextField = AuthTextFieldDirector().buildEmailTextField()
     private let passwordTextField = AuthTextFieldDirector().buildPasswordTextField()
     
     private lazy var signInButton = UIButton().then {
@@ -58,50 +46,70 @@ final class SignInVC: UIViewController {
     
     //MARK: - Life Cycle
     
+    init(viewModel: SignInViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        target()
-        binding()
+        delegate()
+        bind()
+        
         style()
         hierarchy()
         layout()
-        updateSignInButtonUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        emailTextField.becomeFirstResponder()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 //MARK: - Methods
 
 extension SignInVC {
     
-    private func target() {
-        idTextField.setUpdateHandler { [weak self] in
-            guard let self else { return }
-            self.updateSignInButtonUI()
+    private func delegate() {
+        emailTextField.authDelegate = self
+        passwordTextField.authDelegate = self
+    }
+    
+    private func bind() {
+        viewModel.ableToSignIn.observe(on: self) { [weak self] isEnabled in
+            self?.updateSignInButtonUI(isEnabled)
         }
         
-        passwordTextField.setUpdateHandler { [weak self] in
-            guard let self else { return }
-            self.updateSignInButtonUI()
+        viewModel.isSuccessLogin.observe(on: self) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.goToMainVC()
+            case .failure(let error):
+                self?.presentTopAlert(error.message)
+            }
         }
     }
     
-    private func binding() {
-        
-    }
+    private func updateSignInButtonUI(_ isEnabled: Bool) {
     
-    // 이부분을 뷰모델이 했으면 좋겠다
-    private func updateSignInButtonUI() {
-        let isEnabled = idTextField.hasText && passwordTextField.hasText
-        
-        
         let backgroundColor: UIColor = isEnabled ? .tvingRed : .black
         let borderColor: UIColor = isEnabled ? .tvingRed : .tvingLightGray
         
         signInButton.setBorder(width: 1, color: borderColor)
         signInButton.backgroundColor = backgroundColor
         signInButton.isEnabled = isEnabled
+    }
+    
+    private func goToMainVC() {
+        let mainVC = MainVC()
+        UIApplication.shared.changeRootViewController(mainVC)
     }
     
     //MARK: - Action
@@ -113,10 +121,8 @@ extension SignInVC {
     
     @objc
     private func signInButtonDidTap() {
-        let mainVC = MainVC()
-        guard let name = idTextField.text else { return }
-        mainVC.dataBind(name)
-        UIApplication.shared.changeRootViewController(mainVC)
+        view.endEditing(true)
+        viewModel.signInButtonDidTapEvent()
     }
 }
 
@@ -131,7 +137,7 @@ extension SignInVC {
     private func hierarchy() {
         view.addSubviews(backButton,
                          titleLabel,
-                         idTextField,
+                         emailTextField,
                          passwordTextField,
                          signInButton)
     }
@@ -149,16 +155,16 @@ extension SignInVC {
             $0.top.equalToSuperview().offset(50)
         }
         
-        idTextField.snp.makeConstraints {
+        emailTextField.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(31)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(52)
         }
         
         passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(idTextField.snp.bottom).offset(10)
-            $0.leading.trailing.equalTo(idTextField)
-            $0.height.equalTo(idTextField)
+            $0.top.equalTo(emailTextField.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(emailTextField)
+            $0.height.equalTo(emailTextField)
         }
         
         signInButton.snp.makeConstraints {
@@ -169,3 +175,27 @@ extension SignInVC {
     }
 }
 
+//MARK: - AuthTextFieldDelegate
+
+extension SignInVC: AuthTextFieldDelegate {
+    
+    func authTextFieldDidReturn(_ textFieldType: AuthTextField.TextFieldType) {
+        switch textFieldType {
+        case .email:
+            passwordTextField.becomeFirstResponder()
+        case .password:
+            view.endEditing(true)
+            signInButtonDidTap()
+        }
+    }
+    
+    
+    func authTextFieldTextDidChange(_ textFieldType: AuthTextField.TextFieldType, text: String) {
+        switch textFieldType {
+        case .email:
+            self.viewModel.emailTextFieldDidChangeEvent(text)
+        case .password:
+            self.viewModel.passwordTextFieldDidChangeEvent(text)
+        }
+    }
+}

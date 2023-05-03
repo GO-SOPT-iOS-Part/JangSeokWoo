@@ -14,6 +14,7 @@ final class OnboardingVC: UIViewController {
     
     //MARK: - Properties
     
+    
     //MARK: - UI Components
     
     private let onboardingImageView: UIImageView = {
@@ -33,7 +34,7 @@ final class OnboardingVC: UIViewController {
     
     
     //MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,11 +55,11 @@ extension OnboardingVC {
     
     @objc
     private func startButtonDidTap() {
-//        let signInSelectVC = SignInSelectVC()
-//        present(signInSelectVC, animated: true)
+//        let signInVC = SignInVC(viewModel: DefaultSignInViewModel(email: "", password: ""))
+//        present(signInVC, animated: true)
         
-        let signInVC = SignInVC()
-        present(signInVC, animated: true)
+        let myPageVC = MyPageVC(viewModel: DefaultMyPageViewModel(profileData: MyProfile.dummyData()))
+        navigationController?.pushViewController(myPageVC, animated: true)
     }
 }
 

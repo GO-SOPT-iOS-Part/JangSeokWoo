@@ -16,15 +16,15 @@ extension UIColor {
 
 extension UIColor {
     
-    class var tvingRed: UIColor {
+    static var tvingRed: UIColor {
         return UIColor(r: 234, g: 51, b: 58)
     }
     
-    class var tvingDarkGray: UIColor {
+    static var tvingDarkGray: UIColor {
         return UIColor(r: 46, g: 46, b: 46)
     }
     
-    class var tvingLightGray: UIColor {
+    static var tvingLightGray: UIColor {
         return UIColor(r: 156, g: 156, b: 156)
     }
 }
